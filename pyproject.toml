@@ -18,6 +18,9 @@ dev = [
   "ruff>=0.5",
   "mypy>=1.10",
 ]
+build = [
+  "pyinstaller>=6.0",
+]
 
 [project.scripts]
 legacy-migration = "legacy_migration.cli:main"

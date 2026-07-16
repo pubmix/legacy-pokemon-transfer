@@ -123,6 +123,36 @@ python -m legacy_migration.cli inspect tests/fixtures/sample_crystal.sav
 This is not packaged as a one-click Windows installer yet. Right now it is a
 Python project that can be cloned, installed, and run locally.
 
+## Windows Installer
+
+The project includes build files for a Windows installer:
+
+- PyInstaller builds the desktop app executable.
+- Inno Setup packages that executable into `LegacyPokemonTransferSetup.exe`.
+
+To build the app folder only:
+
+```powershell
+.\scripts\build_windows.ps1 -SkipInstaller
+```
+
+To build the installer, install [Inno Setup 6](https://jrsoftware.org/isdl.php)
+and run:
+
+```powershell
+.\scripts\build_windows.ps1
+```
+
+Successful installer builds are written to:
+
+```text
+installer\LegacyPokemonTransferSetup.exe
+```
+
+The installer output is intentionally not committed to the repository. It should
+be attached to a GitHub Release when you are ready to distribute a specific
+version.
+
 ## Current CLI Examples
 
 ## Desktop UI

@@ -10,7 +10,10 @@ venv/
 # Build artifacts
 build/
 dist/
+installer/
 *.egg-info/
+.venv-build/
+*.spec
 
 # Local development and generated outputs
 work/

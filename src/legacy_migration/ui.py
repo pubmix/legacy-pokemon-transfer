@@ -22,10 +22,8 @@ from legacy_migration.models import PokemonRecord
 
 LOGGER = logging.getLogger(__name__)
 
-DEFAULT_SAVE = Path(
-    r"C:\Users\jerem\OneDrive\Documents\Pokemon - Crystal Version (USA, Europe) (Rev 1).sav"
-)
-DEFAULT_OUTPUT_DIR = Path("outputs")
+DEFAULT_SAVE = Path()
+DEFAULT_OUTPUT_DIR = Path.home() / "Documents" / "Legacy Pokemon Transfer Exports"
 
 
 class MigrationApp(tk.Tk):
@@ -37,7 +35,7 @@ class MigrationApp(tk.Tk):
         self.geometry("1040x700")
         self.minsize(920, 600)
 
-        self.save_path_var = tk.StringVar(value=str(DEFAULT_SAVE))
+        self.save_path_var = tk.StringVar(value="")
         self.output_dir_var = tk.StringVar(value=str(DEFAULT_OUTPUT_DIR))
         self.status_var = tk.StringVar(value="Choose a save file, then inspect it.")
         self.include_boxes_var = tk.BooleanVar(value=True)
