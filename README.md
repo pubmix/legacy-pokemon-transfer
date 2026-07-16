@@ -14,4 +14,8 @@ Gen II:
 - Full Gen II species name table: not yet
 
 
-DISCLAIMER: Current build does not support non-English formats of Gen 1/2 games. This will be covered in future builds.
+DISCLAIMER: 
+1. Current build does not support non-English formats of Gen 1/2 games. This will be covered in future builds.
+
+2. User will need a FlashGBX connector to extract .sav files, as exporting original save content from original GB/GBC games is not supported in MRUpdater
+
