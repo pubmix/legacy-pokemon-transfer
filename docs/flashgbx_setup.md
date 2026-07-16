@@ -55,13 +55,13 @@ project has stronger verification tooling.
 From the project root:
 
 ```powershell
-& "C:\Users\jerem\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -m legacy_migration.cli inspect incoming_saves\pokemon_crystal_original_2026-07-15.sav
+python -m legacy_migration.cli inspect incoming_saves\pokemon_crystal_original_2026-07-15.sav
 ```
 
 Then list party Pokemon:
 
 ```powershell
-& "C:\Users\jerem\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -m legacy_migration.cli list-pokemon incoming_saves\pokemon_crystal_original_2026-07-15.sav
+python -m legacy_migration.cli list-pokemon incoming_saves\pokemon_crystal_original_2026-07-15.sav
 ```
 
 ## Important Boundaries

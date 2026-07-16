@@ -77,6 +77,52 @@ Real cartridge-save support should not be claimed until the parser has been
 tested against valid known-good saves for each game. The included fixtures are
 synthetic and are not complete representative gameplay saves.
 
+## Download And Run
+
+Anyone can download the source from GitHub:
+
+```powershell
+git clone https://github.com/pubmix/legacy-pokemon-transfer.git
+cd legacy-pokemon-transfer
+```
+
+Install with Python 3.12 or newer:
+
+```powershell
+python -m pip install -e ".[dev]"
+```
+
+On Windows, if `python` is not recognized, install Python 3.12+ and either add
+it to PATH or replace `python` in the examples with `py -3.12`.
+
+Launch the desktop UI:
+
+```powershell
+legacy-migration-ui
+```
+
+If the installed script is not on PATH, use module form:
+
+```powershell
+python -m legacy_migration.ui
+```
+
+Run the CLI:
+
+```powershell
+legacy-migration inspect tests/fixtures/sample_crystal.sav
+legacy-migration list-pokemon tests/fixtures/sample_crystal.sav --include-boxes
+```
+
+Or use module form:
+
+```powershell
+python -m legacy_migration.cli inspect tests/fixtures/sample_crystal.sav
+```
+
+This is not packaged as a one-click Windows installer yet. Right now it is a
+Python project that can be cloned, installed, and run locally.
+
 ## Current CLI Examples
 
 ## Desktop UI
@@ -84,7 +130,7 @@ synthetic and are not complete representative gameplay saves.
 There is also a simple local desktop UI:
 
 ```powershell
-outputs\run_legacy_migration_ui.cmd
+legacy-migration-ui
 ```
 
 The UI lets you choose a `.sav`, inspect it, list party and supported box
@@ -93,7 +139,7 @@ Pokemon, select records, and export a migration-candidate package.
 You can also launch it through Python:
 
 ```powershell
-& "C:\Users\jerem\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -m legacy_migration.ui
+python -m legacy_migration.ui
 ```
 
 Inspect a save:
@@ -124,7 +170,7 @@ legacy-migration export tests/fixtures/sample_crystal.sav --pokemon-id party-1 -
 If `legacy-migration` is not on PATH, use module form:
 
 ```powershell
-& "C:\Users\jerem\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -m legacy_migration.cli inspect tests/fixtures/sample_crystal.sav
+python -m legacy_migration.cli inspect tests/fixtures/sample_crystal.sav
 ```
 
 Example inspect output:
@@ -289,12 +335,6 @@ More detail and source links live in `docs/save_format_notes.md`.
 
 ## Install For Development
 
-Using the bundled Codex Python runtime:
-
-```powershell
-& "C:\Users\jerem\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -m pip install -e ".[dev]"
-```
-
 If Python 3.12 is on PATH:
 
 ```powershell
@@ -304,9 +344,9 @@ python -m pip install -e ".[dev]"
 ## Run Tests And Checks
 
 ```powershell
-& "C:\Users\jerem\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -m pytest -p no:cacheprovider
-& "C:\Users\jerem\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -m ruff check .
-& "C:\Users\jerem\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" -m mypy src tests
+python -m pytest -p no:cacheprovider
+python -m ruff check .
+python -m mypy src tests
 ```
 
 ## Test Fixtures
