@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Local development and generated outputs
+work/
+outputs/
+incoming_saves/
+
+# Real or user-provided save data should not be published by default.
+*.sav
+
+# Local editor/OS files
+.DS_Store
+Thumbs.db
