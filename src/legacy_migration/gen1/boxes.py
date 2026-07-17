@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import logging
+
 from legacy_migration.errors import ParseError
 from legacy_migration.gen1.constants import (
     BOX_DATA_LENGTH,
@@ -19,6 +21,8 @@ from legacy_migration.gen1.constants import (
 from legacy_migration.gen1.species import GEN1_SPECIES_NAMES
 from legacy_migration.gen1.text_codec import decode_gen1_text
 from legacy_migration.models import PokemonLocation, PokemonRecord
+
+LOGGER = logging.getLogger(__name__)
 
 
 def _slice_checked(data: bytes, offset: int, length: int, field_name: str) -> bytes:
@@ -122,28 +126,35 @@ def _parse_box_at(
 
 def parse_current_box_pokemon(data: bytes) -> tuple[PokemonRecord, ...]:
     """Parse the loaded/current PC box from a Generation I save."""
-    return _parse_box_at(
-        data,
-        box_offset=CURRENT_BOX_DATA_OFFSET,
-        box_number=None,
-        label="current box",
-        local_id_prefix="current-box",
-    )
+    try:
+        return _parse_box_at(
+            data,
+            box_offset=CURRENT_BOX_DATA_OFFSET,
+            box_number=None,
+            label="current box",
+            local_id_prefix="current-box",
+        )
+    except ParseError as exc:
+        LOGGER.debug("Skipping unparsable Gen I current box: %s", exc)
+        return ()
 
 
 def parse_stored_box_pokemon(data: bytes) -> tuple[PokemonRecord, ...]:
     """Parse stored PC boxes 1-12 from a Generation I save."""
     records: list[PokemonRecord] = []
     for box_index, box_offset in enumerate(STORED_BOX_OFFSETS, start=1):
-        records.extend(
-            _parse_box_at(
-                data,
-                box_offset=box_offset,
-                box_number=box_index,
-                label=f"box {box_index}",
-                local_id_prefix=f"box-{box_index}",
+        try:
+            records.extend(
+                _parse_box_at(
+                    data,
+                    box_offset=box_offset,
+                    box_number=box_index,
+                    label=f"box {box_index}",
+                    local_id_prefix=f"box-{box_index}",
+                )
             )
-        )
+        except ParseError as exc:
+            LOGGER.debug("Skipping unparsable Gen I stored box %s: %s", box_index, exc)
     return tuple(records)
 
 

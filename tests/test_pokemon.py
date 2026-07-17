@@ -105,6 +105,26 @@ def test_parses_gen1_stored_box_fixture() -> None:
     assert record.parsing_warnings == ()
 
 
+def test_gen1_box_parser_skips_uninitialized_stored_boxes() -> None:
+    data = bytearray(_gen1_fixture_with_boxed_charmander())
+    data[STORED_BOX_OFFSETS[1]] = 0xFF
+
+    records = parse_box_pokemon(bytes(data))
+
+    assert len(records) == 1
+    assert records[0].local_id == "box-1-1"
+
+
+def test_gen1_box_parser_skips_uninitialized_current_box() -> None:
+    data = bytearray(_gen1_fixture_with_boxed_charmander())
+    data[CURRENT_BOX_DATA_OFFSET] = 0xFF
+
+    records = parse_box_pokemon(bytes(data))
+
+    assert len(records) == 1
+    assert records[0].local_id == "box-1-1"
+
+
 def test_invalid_party_count_is_rejected() -> None:
     data = bytearray(Path("tests/fixtures/sample_gen1.sav").read_bytes())
     data[PARTY_DATA_OFFSET] = 7
